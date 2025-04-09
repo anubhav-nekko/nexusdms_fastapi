@@ -19,6 +19,8 @@ from docx import Document # type: ignore
 from pptx import Presentation # type: ignore
 from PIL import Image # type: ignore
 
+from fastapi.middleware.cors import CORSMiddleware # type: ignore
+
 ###############################################################################
 # 1) LOAD SECRETS AND CONFIG
 ###############################################################################
@@ -56,6 +58,15 @@ If information is missing or unclear, say so explicitly.
 # 2) FASTAPI APP
 ###############################################################################
 app = FastAPI(title="Azure Document Query Assistant", version="1.0.0")
+
+# Allow all origins (not recommended for production)
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # Or specify a list like ["https://yourfrontend.com"]
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 ###############################################################################
 # 3) FAISS + METADATA INIT
